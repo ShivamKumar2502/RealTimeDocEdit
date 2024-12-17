@@ -1,0 +1,11 @@
+<div class="dashboard">
+  <h2>Document Editor</h2>
+  <textarea
+    [(ngModel)]="documentContent"
+    rows="20"
+    cols="80"
+    placeholder="Start editing your document..."
+  ></textarea>
+  <button (click)="saveDocument()">Save</button>
+  <button (click)="logout()">Logout</button>
+</div>

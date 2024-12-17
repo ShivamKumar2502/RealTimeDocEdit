@@ -8,8 +8,6 @@ import lombok.Data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Set;
-
 @Data
 public class SignUpRequestDto {
     @NotBlank(message = "Username is required!")
@@ -20,6 +18,11 @@ public class SignUpRequestDto {
     @Email(message = "Email is not in valid format!")
     @NotBlank(message = "Email is required!")
     private String email;
+
+    @NotBlank(message = "Password is required!")
+    @Size(min = 8, message = "Password must have atleast 8 characters!")
+    @Size(max = 20, message = "Password can have have atmost 20 characters!")
+    private String password;
 
     public String getUserName() {
         return userName;
@@ -45,26 +48,10 @@ public class SignUpRequestDto {
         this.password = password;
     }
 
-    public Set<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<String> roles) {
-        this.roles = roles;
-    }
-
-    @NotBlank(message = "Password is required!")
-    @Size(min = 8, message = "Password must have atleast 8 characters!")
-    @Size(max = 20, message = "Password can have have atmost 20 characters!")
-    private String password;
-
-    private Set<String> roles;
-
     @Autowired
     public SignUpRequestDto(String userName, String email, String password) {
         this.userName = userName;
         this.email = email;
         this.password = password;
-        this.roles = null;
     }
 }

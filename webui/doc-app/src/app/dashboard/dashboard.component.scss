@@ -1,0 +1,50 @@
+@import '../../styles/_variables.scss';
+.dashboard {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    textarea {
+        width: 100%;
+        height: 300px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        resize: none;
+        font-family: 'Courier New', Courier, monospace;
+
+        &:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px 15px;
+        background-color: #28a745;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #218838;
+        }
+    }
+}

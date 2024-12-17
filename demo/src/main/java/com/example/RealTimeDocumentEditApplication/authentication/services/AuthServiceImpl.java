@@ -7,7 +7,6 @@ import com.example.RealTimeDocumentEditApplication.authentication.dto.SignInResp
 import com.example.RealTimeDocumentEditApplication.authentication.dto.SignUpRequestDto;
 import com.example.RealTimeDocumentEditApplication.authentication.exception.RoleNotFoundException;
 import com.example.RealTimeDocumentEditApplication.authentication.exception.UserAlreadyExistsException;
-import com.example.RealTimeDocumentEditApplication.authentication.models.Role;
 import com.example.RealTimeDocumentEditApplication.authentication.models.User;
 import com.example.RealTimeDocumentEditApplication.authentication.security.UserDetailsImpl;
 import com.example.RealTimeDocumentEditApplication.authentication.security.jwt.JwtUtils;
@@ -75,21 +74,7 @@ public class AuthServiceImpl implements AuthService {
                 .username(signUpRequestDto.getUserName())
                 .password(encryptedPass)
                 .enabled(true)
-                .roles(determineRoles(signUpRequestDto.getRoles()))
                 .build();
-    }
-
-    private Set<Role> determineRoles(Set<String> strRoles) throws RoleNotFoundException {
-        Set<Role> roles = new HashSet<>();
-
-        if (strRoles == null) {
-            roles.add(roleFactory.getInstance("user"));
-        } else {
-            for (String role : strRoles) {
-                roles.add(roleFactory.getInstance(role));
-            }
-        }
-        return roles;
     }
 
     @Override
@@ -102,9 +87,6 @@ public class AuthServiceImpl implements AuthService {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
 
         SignInResponseDto signInResponseDto = SignInResponseDto.builder()
                 .username(userDetails.getUsername())
@@ -112,7 +94,6 @@ public class AuthServiceImpl implements AuthService {
                 .id(userDetails.getId())
                 .token(jwt)
                 .type("Bearer")
-                .roles(roles)
                 .build();
 
         return ResponseEntity.ok(
