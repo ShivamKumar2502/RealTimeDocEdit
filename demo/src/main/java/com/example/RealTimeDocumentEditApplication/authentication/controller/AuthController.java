@@ -3,6 +3,7 @@ package com.example.RealTimeDocumentEditApplication.authentication.controller;
 import com.example.RealTimeDocumentEditApplication.authentication.dto.ApiResponseDto;
 import com.example.RealTimeDocumentEditApplication.authentication.dto.SignInRequestDto;
 import com.example.RealTimeDocumentEditApplication.authentication.dto.SignUpRequestDto;
+import com.example.RealTimeDocumentEditApplication.authentication.exception.SignInException;
 import com.example.RealTimeDocumentEditApplication.authentication.services.AuthService;
 import com.example.RealTimeDocumentEditApplication.authentication.exception.RoleNotFoundException;
 import com.example.RealTimeDocumentEditApplication.authentication.exception.UserAlreadyExistsException;
@@ -23,12 +24,13 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponseDto<?>> registerUser(@RequestBody @Valid SignUpRequestDto signUpRequestDto)
-            throws UserAlreadyExistsException, RoleNotFoundException, RoleNotFoundException {
+            throws UserAlreadyExistsException, RoleNotFoundException {
         return authService.signUpUser(signUpRequestDto);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<ApiResponseDto<?>> signInUser(@RequestBody @Valid SignInRequestDto signInRequestDto){
+    public ResponseEntity<ApiResponseDto<?>> signInUser(@RequestBody @Valid SignInRequestDto signInRequestDto)
+            throws SignInException {
         return authService.signInUser(signInRequestDto);
     }
 }

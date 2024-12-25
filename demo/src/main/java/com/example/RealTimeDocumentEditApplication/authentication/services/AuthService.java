@@ -4,6 +4,7 @@ import com.example.RealTimeDocumentEditApplication.authentication.dto.ApiRespons
 import com.example.RealTimeDocumentEditApplication.authentication.dto.SignInRequestDto;
 import com.example.RealTimeDocumentEditApplication.authentication.dto.SignUpRequestDto;
 import com.example.RealTimeDocumentEditApplication.authentication.exception.RoleNotFoundException;
+import com.example.RealTimeDocumentEditApplication.authentication.exception.SignInException;
 import com.example.RealTimeDocumentEditApplication.authentication.exception.UserAlreadyExistsException;
 
 import jakarta.validation.Valid;
@@ -16,5 +17,5 @@ public interface AuthService {
 
     ResponseEntity<ApiResponseDto<?>> signUpUser(@Valid SignUpRequestDto signUpRequestDto) throws UserAlreadyExistsException, RoleNotFoundException;
 
-    ResponseEntity<ApiResponseDto<?>> signInUser(@Valid SignInRequestDto signInRequestDto);
+    ResponseEntity<ApiResponseDto<?>> signInUser(@Valid SignInRequestDto signInRequestDto) throws SignInException;
 }

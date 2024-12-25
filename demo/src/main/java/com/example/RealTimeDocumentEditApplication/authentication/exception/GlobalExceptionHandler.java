@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
                 .body(
                         ApiResponseDto.builder()
                                 .isSuccess(false)
-                                .message("Registration Failed: Please provide valid data.")
+                                .message("Failed: Please provide valid data.")
                                 .response(errorMessage)
                                 .build()
                 );
@@ -49,6 +49,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponseDto<?>> RoleNotFoundExceptionHandler(RoleNotFoundException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(
+                        ApiResponseDto.builder()
+                                .isSuccess(false)
+                                .message(exception.getMessage())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(value = SignInException.class)
+    public ResponseEntity<ApiResponseDto<?>> SignInExceptionHandler(UserAlreadyExistsException exception) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .body(
                         ApiResponseDto.builder()
                                 .isSuccess(false)

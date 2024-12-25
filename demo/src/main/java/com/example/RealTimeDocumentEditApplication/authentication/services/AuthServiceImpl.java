@@ -6,6 +6,7 @@ import com.example.RealTimeDocumentEditApplication.authentication.dto.SignInRequ
 import com.example.RealTimeDocumentEditApplication.authentication.dto.SignInResponseDto;
 import com.example.RealTimeDocumentEditApplication.authentication.dto.SignUpRequestDto;
 import com.example.RealTimeDocumentEditApplication.authentication.exception.RoleNotFoundException;
+import com.example.RealTimeDocumentEditApplication.authentication.exception.SignInException;
 import com.example.RealTimeDocumentEditApplication.authentication.exception.UserAlreadyExistsException;
 import com.example.RealTimeDocumentEditApplication.authentication.models.User;
 import com.example.RealTimeDocumentEditApplication.authentication.security.UserDetailsImpl;
@@ -72,13 +73,24 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseEntity<ApiResponseDto<?>> signInUser(@Valid SignInRequestDto signInRequestDto) {
+    public ResponseEntity<ApiResponseDto<?>> signInUser(@Valid SignInRequestDto signInRequestDto)
+            throws SignInException {
+        if(signInRequestDto.getEmail().isEmpty()) {
+            throw new SignInException("Login Failed: Email field should not be empty.");
+        }
+        if(signInRequestDto.getPassword().isEmpty()) {
+            throw new SignInException("Login Failed: Password field should not be empty.");
+        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInRequestDto.getEmail(),
                         signInRequestDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
+
+        if(jwt.isEmpty()) {
+            throw new SignInException("Login Failed: generateJwtToken failed to generate jwt.");
+        }
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
