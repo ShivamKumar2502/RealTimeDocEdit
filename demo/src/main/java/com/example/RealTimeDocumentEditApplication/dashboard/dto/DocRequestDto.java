@@ -1,5 +1,7 @@
 package com.example.RealTimeDocumentEditApplication.dashboard.dto;
 
+import com.example.RealTimeDocumentEditApplication.dashboard.util.docPermission;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -9,9 +11,12 @@ public class DocRequestDto {
     private String content;
     private Instant createdAt;
     private Instant updated_at;
+    private docPermission permissions;
+    private String lastUpdatedBy;
+    private String owner;
 
     public DocRequestDto(UUID id, String title, String content, Instant createdAt, Instant updated_at,
-                         Integer version, String permissions, UUID lastUpdatedBy) {
+                         Integer version, docPermission permissions, String lastUpdatedBy, String owner) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -20,6 +25,7 @@ public class DocRequestDto {
         this.version = version;
         this.permissions = permissions;
         this.lastUpdatedBy = lastUpdatedBy;
+        this.owner = owner;
     }
 
     private Integer version;
@@ -72,22 +78,27 @@ public class DocRequestDto {
         this.version = version;
     }
 
-    public String getPermissions() {
+    public docPermission getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(String permissions) {
+    public void setPermissions(docPermission permissions) {
         this.permissions = permissions;
     }
 
-    public UUID getLastUpdatedBy() {
+    public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
 
-    public void setLastUpdatedBy(UUID lastUpdatedBy) {
+    public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    private String permissions;
-    private UUID lastUpdatedBy;
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 }

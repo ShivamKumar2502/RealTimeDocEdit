@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth/auth.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @Component({
   selector: 'app-root',

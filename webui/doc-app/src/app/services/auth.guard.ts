@@ -20,7 +20,6 @@ export class AuthGuard implements CanActivate {
         console.log("shivam inside localStorage 1 " + localStorage.getItem('authToken'));
         const token = localStorage.getItem('authToken');  // Adjust if you store the token elsewhere
         if (token && this.authService.isValidToken(token)) {
-          console.log("shivam inside localStorage");
           return true;  // Token is valid, allow access
         }
     }

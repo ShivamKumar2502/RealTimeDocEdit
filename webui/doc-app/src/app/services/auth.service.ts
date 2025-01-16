@@ -21,6 +21,8 @@ export class AuthService {
   isValidToken(token: string): boolean {
     try {
       const decodedToken = this.decodeToken(token);
+      console.log("Shivam decoded 1 " + decodedToken.sub);
+      localStorage.setItem('userEmail', decodedToken.sub);
       const expirationDate = decodedToken.exp * 1000;  // JWT expiration is in seconds, convert to ms
       return expirationDate > Date.now();
     } catch (error) {

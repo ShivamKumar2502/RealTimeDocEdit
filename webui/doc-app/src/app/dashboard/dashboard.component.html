@@ -1,4 +1,4 @@
-<div class="dashboard">
+<!-- <div class="dashboard">
   <h2>Document Editor</h2>
   <textarea
     [(ngModel)]="documentContent"
@@ -8,4 +8,24 @@
   ></textarea>
   <button (click)="saveDocument()">Save</button>
   <button (click)="logout()">Logout</button>
+</div> -->
+
+<div class="dashboard">
+  <h2>Document Editor</h2>
+  <input
+    type="text"
+    [(ngModel)]="documentTitle"
+    placeholder="Enter document title"
+    style="width: 100%; margin-bottom: 10px"
+  />
+  <textarea
+    [(ngModel)]="documentContent"
+    rows="20"
+    cols="80"
+    placeholder="Start editing your document..."
+  ></textarea>
+  <div style="margin-top: 10px">
+    <button (click)="saveDocument()">Save</button>
+    <button (click)="logout()">Logout</button>
+  </div>
 </div>

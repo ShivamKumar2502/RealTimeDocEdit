@@ -4,6 +4,8 @@ import com.example.RealTimeDocumentEditApplication.dashboard.dto.ApiResponseDocD
 import com.example.RealTimeDocumentEditApplication.dashboard.dto.DocRequestDto;
 import com.example.RealTimeDocumentEditApplication.dashboard.models.RealTimeDoc;
 import com.example.RealTimeDocumentEditApplication.dashboard.repositories.DocRepo;
+import com.example.RealTimeDocumentEditApplication.dashboard.util.docPermission;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ public class DocService {
     }
 
     public ResponseEntity<ApiResponseDocDto<?>> createDocument(DocRequestDto docRequestDto) {
+        docRequestDto.setPermissions(docPermission.ADMIN);
         RealTimeDoc realTimeDoc = createDoc(docRequestDto);
         documentRepository.save(realTimeDoc);
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -34,7 +37,8 @@ public class DocService {
     }
 
     private RealTimeDoc createDoc(DocRequestDto docRequestDto) {
-        return new RealTimeDoc(docRequestDto.getTitle(), docRequestDto.getContent(), docRequestDto.getPermissions(), docRequestDto.getLastUpdatedBy());
+        return new RealTimeDoc(docRequestDto.getTitle(), docRequestDto.getContent(), docRequestDto.getPermissions(),
+                docRequestDto.getLastUpdatedBy(), docRequestDto.getOwner());
     }
 
     public ResponseEntity<ApiResponseDocDto<?>> updateDocument(UUID id, DocRequestDto docRequestDto) {
@@ -47,6 +51,7 @@ public class DocService {
         existingDocument.setLastUpdatedBy(updatedDocument.getLastUpdatedBy());
         existingDocument.setUpdatedAt(updatedDocument.getUpdatedAt());
         existingDocument.setVersion(existingDocument.getVersion() + 1);
+        existingDocument.setOwner(existingDocument.getOwner());
 
         documentRepository.save(existingDocument);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(

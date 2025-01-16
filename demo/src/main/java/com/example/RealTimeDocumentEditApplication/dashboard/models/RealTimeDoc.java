@@ -1,5 +1,6 @@
 package com.example.RealTimeDocumentEditApplication.dashboard.models;
 
+import com.example.RealTimeDocumentEditApplication.dashboard.util.docPermission;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -29,21 +30,25 @@ public class RealTimeDoc {
     private Integer version;
 
     @Column(name = "permissions")
-    private String permissions;
+    private docPermission permissions;
 
     @Column(name = "last_updated_by")
-    private UUID lastUpdatedBy;
+    private String lastUpdatedBy;
+
+    @Column(name = "owner")
+    private String owner;
 
     // Constructors
     public RealTimeDoc() {
         // Default constructor required by JPA
     }
 
-    public RealTimeDoc(String title, String content, String permissions, UUID lastUpdatedBy) {
+    public RealTimeDoc(String title, String content, docPermission permissions, String lastUpdatedBy, String owner) {
         this.title = title;
         this.content = content;
         this.permissions = permissions;
         this.lastUpdatedBy = lastUpdatedBy;
+        this.owner = owner;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
         this.version = 1;
@@ -98,19 +103,27 @@ public class RealTimeDoc {
         this.version = version;
     }
 
-    public String getPermissions() {
+    public docPermission getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(String permissions) {
+    public void setPermissions(docPermission permissions) {
         this.permissions = permissions;
     }
 
-    public UUID getLastUpdatedBy() {
+    public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
 
-    public void setLastUpdatedBy(UUID lastUpdatedBy) {
+    public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

@@ -3,6 +3,8 @@ package com.example.RealTimeDocumentEditApplication.dashboard.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @Builder
 public class ApiResponseDocDto<T> {
